@@ -24,12 +24,15 @@ public:
 
 Node* mergeList(Node* p, Node* q);
 
+
 int main()
 {
     int arrA[3] = { 2,3,7 };
     int arrB[3] = { 4,8,10 };
     LinkedList* a = new LinkedList(arrA, 3);
     LinkedList* b = new LinkedList(arrB, 3);
+    a->display();
+    b->display();
     cout << "Linked List A is ";
     a->isSorted();
     cout << "Linked List B is ";
