@@ -74,8 +74,3 @@ void printMatrix(int matrix[10][10], int n)
         cout << endl;
     }
 }
-
-void printNew(int matrix[10][10], int n)
-{
-
-}
