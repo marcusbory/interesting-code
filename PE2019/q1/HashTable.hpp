@@ -44,7 +44,7 @@ void HashTable::deleteWithCollision(int n) {
 
 bool HashTable::existWithCollision(int n) {
 	int base = h(n) % N; int probeCount = 0;
-	while (probeCount < N || ht[(base + probeCount) % N] != 0) {
+	while (probeCount <= N && ht[(base + probeCount) % N] != 0) {
 		if (ht[(base + probeCount) % N] == n) 
 			return true;
 		probeCount++;
