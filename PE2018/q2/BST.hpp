@@ -270,10 +270,11 @@ void BinarySearchTree<T>::_postOrderPrint(TreeNode<T>* node) {
 
 template <class T>
 int BinarySearchTree<T>::rank(T item) {
-	if (!exist(item))
-		return -1;
-	int rank = recursiveRank(_root, item);
-	return rank;
+	if (find(item)) {
+		int rank = recursiveRank(_root, item);
+		return rank;
+	}
+	return -1;
 }
 //if you define other helper functions, please include them here. 
 
@@ -292,6 +293,24 @@ int BinarySearchTree<T>::subtreeSize(TreeNode<T>* node) {
 	if (!node) 
 		return 0;
 	return subtreeSize(node->_left) + 1 + subtreeSize(node->_right);
+}
+
+/*
+* exist is wrong: Produces runtime error, notice it may derefence NULLptr
+* _search is wrong: Only ever returns NULL if tree is empty, wrong node return if cannot find
+*/
+template <class T>
+bool BinarySearchTree<T>::find(T item) {
+	TreeNode<T>* temp = _root;
+	while (temp) {
+		if (item == temp->_item)
+			return true;
+		if (item < temp->_item)
+			temp = temp->_left;
+		else
+			temp = temp->_right;
+	}
+	return false;
 }
 
 // END OF MY OWN HELPER FUNCTIONS

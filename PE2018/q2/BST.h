@@ -54,7 +54,8 @@ public:
 	int rank(T);
 	int recursiveRank(TreeNode<T>*, T);
 	int subtreeSize(TreeNode<T>*);
-
+	// Implement find because exist and _search are wrong
+	bool find(T);
 	//You may include other functions, if necessary
 };
 
