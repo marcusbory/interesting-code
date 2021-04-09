@@ -22,8 +22,10 @@ void testBubbleSort() {
     cout << "=============================" << endl;
 
     List invertedList;
-    for ( int i = 0; i < 10; i ++ )
-        invertedList.insertHead( i * 10 );
+    for (int i = 0; i < 10; i += 2) {
+        invertedList.insertHead(i * 10);
+        invertedList.insertHead(i * 10);
+    }
 
     cout << "Current List with 10 elements: ";
     invertedList.print();

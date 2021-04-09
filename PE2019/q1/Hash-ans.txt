@@ -1,1 +1,2 @@
-Hash function given above is done via Linear Probing. It is not a good hash function because it simply generates a hash position via brute force linearly (ie index+1 while not empty bucket). This results in primary clustering, and the time taken to perform operations such as insert, delete, check exist may become O(N) eventually as elements with collision cluster together near the same base index, ruining the efficiency of a hash table.
+1) This hash function may result in many collisions as there are many inputs that can provide the same output. Ie 123 and 321 give the same hashkey.
+2) Divison is slower than multiplication to process, thus for big numbers, it may slow down the runtime.

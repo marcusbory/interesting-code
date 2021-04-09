@@ -81,33 +81,27 @@ void List::bubbleSort( bool printAtEveryIteration ) {
     //       The list should be sorted in ascending order.
 
     // ENTER YOUR ANSWER BELOW.
-    bool swapped = false;
-    do {
-        ListNode* temp1 = _head;
-        ListNode* temp2 = _head->_next;
-        ListNode* temp1tail = nullptr;
-        swapped = false;
-        while (temp1 && temp2) {
-            if (temp1->_item > temp2->_item) {
-                if (temp1tail == nullptr) {
-                    //temp1tail null means must change head ptr
-                    temp1->_next = temp2->_next;
-                    temp2->_next = temp1;
-                    _head = temp2;
-                }
-                else {
-                    temp1->_next = temp2->_next;
-                    temp2->_next = temp1;
-                    temp1tail->_next = temp2;
-                }
-                swapped = true;
+    ListNode* curr = _head;
+    int temp = 0;
+    int listsize = 0;
+    while (curr) {
+        listsize++;
+        curr = curr->_next;
+    }
+    curr = _head;
+    for (int i = 0; i < listsize - 1; i++) {
+        while (curr->_next) {
+            if (curr->_item > curr->_next->_item) {
+                temp = curr->_item;
+                curr->_item = curr->_next->_item;
+                curr->_next->_item = temp;
             }
-            temp1tail = temp1;
-            temp1 = temp2;
-            temp2 = temp2->_next;
+            curr = curr->_next;
         }
+        curr = _head;
         if (printAtEveryIteration) print(false);
-    } while (swapped);
+    }
+
 
 
     // ENTER YOUR ANSWER ABOVE.
@@ -184,10 +178,12 @@ void List::merge( List* otherList ) {
     while (list1ptr) {
         temp->insertHead(list1ptr->_item);
         list1ptr = list1ptr->_next;
+        removeHead();
     }
     while (list2ptr) {
         temp->insertHead(list2ptr->_item);
         list2ptr = list2ptr->_next;
+        otherList->removeHead();
     }
     temp->reverse();
     assert(temp); // Optional, I guess
