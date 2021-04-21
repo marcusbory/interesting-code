@@ -13,7 +13,7 @@ class UnionFind {
         UnionFind(int N);
         int findSet(int i);
         bool isSameSet(int i, int j);
-        void unionSet(int i, int j);
+        bool unionSet(int i, int j);
 };
 
 UnionFind::UnionFind(int N) {
@@ -33,9 +33,9 @@ bool UnionFind::isSameSet(int i, int j) {
     return findSet(i) == findSet(j);
 }
 
-void UnionFind::unionSet(int i, int j) {
+bool UnionFind::unionSet(int i, int j) {
     if (isSameSet(i, j))
-        return;
+        return false;
     // y acts as parent here
     int x = findSet(i), y = findSet(j);
     // Always want to append set of lower rank under bigger rank
@@ -46,4 +46,5 @@ void UnionFind::unionSet(int i, int j) {
         ++rank[y];
     setSize[y] += setSize[x];
     numSets--;
+    return true;
 }
