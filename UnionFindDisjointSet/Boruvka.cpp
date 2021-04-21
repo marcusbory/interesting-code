@@ -8,6 +8,7 @@ struct edge {
 };
 
 int main() {
+    // Setting up required data and data structures
     freopen("boruvka-input.txt", "r", stdin);
     int V, E;
     cin >> V >> E; cin.ignore();
@@ -18,6 +19,8 @@ int main() {
     for (int i = 0; i < E; i++)
         cin >> EL[i].from >> EL[i].to >> EL[i].weight;
     UnionFind* UFDS = new UnionFind(V);
+
+    // MAIN BORUVKA FUNCTION
     while (count > 1) {
         // Set every vertex min neighbour edge to be -1 (unknown)
         for (int i = 0; i < V; i++)
@@ -49,5 +52,8 @@ int main() {
         }
     }
     cout << "MST via Boruvka's Algo is " << ans << endl;
+    delete[] EL;
+    delete[] min_edge;
+    delete UFDS;
     return 0;
 }
