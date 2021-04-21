@@ -1,72 +1,53 @@
 #include <iostream>
-#define INF ((int) 1e9 + 7)
-#define N ((int) 1e5 + 7)
+#include "UFDS.hpp"
 using namespace std;
 
 struct edge {
-    int from;
-    int to;
-    int weight;
+    // Graph is undirected but just for some reference
+    int from, to, weight;
 };
-
-int V, E;
-int parent[N], min_edge[N]; // min_edge is minimum edge for vertext[i] 
-edge EL[N]; // EDGE LIST EL
-
-int findSet(int v) {
-    if (parent[v] == v)
-        return v;
-    return parent[v] = findSet(parent[v]);
-}
-
-bool merge(int u, int v) {
-    u = findSet(u); 
-    v = findSet(v);
-    if (u == v) 
-        return false;
-    parent[u] = v; // Merge
-    return true;
-}
-
-void initUFDS() {
-    for (int i = 0; i < N; i++)
-        parent[i] = i;
-}
 
 int main() {
     freopen("boruvka-input.txt", "r", stdin);
+    int V, E;
     cin >> V >> E; cin.ignore();
     long long ans = 0;
     int count = V;
-    for (int i = 0; i < E; i++) { 
+    edge* EL = new edge[E]; // Make edge list
+    int* min_edge = new int[V]; // Array to store list minimum edges for each vertex
+    for (int i = 0; i < E; i++)
         cin >> EL[i].from >> EL[i].to >> EL[i].weight;
-    }
-    initUFDS();
+    UnionFind* UFDS = new UnionFind(V);
     while (count > 1) {
+        // Set every vertex min neighbour edge to be -1 (unknown)
         for (int i = 0; i < V; i++)
             min_edge[i] = -1;
 
         for (int i = 0; i < E; i++) {
-            if (findSet(EL[i].from) == findSet(EL[i].to))
+            if (UFDS->isSameSet(EL[i].from, EL[i].to))
                 continue;
-
-            int from = findSet(EL[i].from);
+            
+            // For this edge, check the FROM vertex
+            int from = UFDS->findSet(EL[i].from);
+            // If FROM vertex does not have a min edge,
+            // Or if this edge's weight < previously recorded min edge for FROM vertex
             if (min_edge[from] == -1 || EL[i].weight < EL[min_edge[from]].weight)
                 min_edge[from] = i;
-
-            int to = findSet(EL[i].to);
+            
+            int to = UFDS->findSet(EL[i].to);
             if (min_edge[to] == -1 || EL[i].weight < EL[min_edge[to]].weight)
                 min_edge[to] = i;
         }
+
         for (int i = 0; i < V; i++) {
             if (min_edge[i] != -1) {
-                if (merge(EL[min_edge[i]].from, EL[min_edge[i]].to)) {
+                if (UFDS->unionSet(EL[min_edge[i]].from, EL[min_edge[i]].to)) {
                     ans += EL[min_edge[i]].weight;
                     count--;
                 }
             }
         }
     }
-    cout << "MST weight is " << ans << endl;
+    cout << "MST via Boruvka's Algo is " << ans << endl;
     return 0;
 }
