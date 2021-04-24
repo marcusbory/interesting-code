@@ -1,3 +1,5 @@
+// Given an array with N elements, there is an element that appears strictly more than (N/2) times. Find that element.
+
 #include <iostream>
 using namespace std;
 
